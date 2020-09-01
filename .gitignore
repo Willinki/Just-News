@@ -131,3 +131,4 @@ dmypy.json
 # Aggiunta da noi
 *.csv
 *.json
+*.txt
