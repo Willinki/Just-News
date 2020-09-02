@@ -19,7 +19,7 @@ We conduct our research on the following newspapers:
 Our dataset consists of around 40000 articles, plus ~20000 Wikipedia pages, that we use as *control corpus*, under the hypothesis that it uses neutral language.
 
 ## Phases 
-Here we present how we developing our research:
+Here are presented the phases of our work.
 * **Data retrieval.** Consists in getting the data from various sources (mainly web-scraping). The code related to this phase is not included in the repo.
 * **Data cleaning and preprocessing.** Consist of creating a dataset suitable for analysis. (CADE_testing.ipynb).
 * **CADE training.** We make use of [CADE](https://github.com/vinid/cade) in order to obtain aligned word-embeddings, one for each newspaper. (CADE_testing.ipynb).
