@@ -20,7 +20,7 @@ Our dataset consists of around 40000 articles, plus ~20000 Wikipedia pages, that
 
 ## Phases 
 Here are presented the phases of our work.
-* **Data retrieval.** Consists in getting the data from various sources (mainly web-scraping). The code related to this phase is not included in the repo.
+* **Data retrieval.** Consists in getting the data from various sources (mainly web-scraping). The code related to this phase is not included in the repo. *A link shall be added once some clean up process has been executed*.
 * **Data cleaning and preprocessing.** Consist of creating a dataset suitable for analysis. (CADE_testing.ipynb).
 * **CADE training.** We make use of [CADE](https://github.com/vinid/cade) in order to obtain aligned word-embeddings, one for each newspaper. (CADE_testing.ipynb).
 * **Score induction.** In order to obtain a *subjectivity score* for the words in our vocabulary, we apply a score induction procedure. This procedure allow us to propagate the score coming from a an [annotated lexicon](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/) to all the words in the vocabulary.
