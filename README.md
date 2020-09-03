@@ -28,5 +28,10 @@ Here are presented the phases of our work.
 * **Final results and visualization.**
 * **(Extra)** Following the indications contained in [this article](https://deepai.org/publication/analytical-methods-for-interpretable-ultradense-word-embeddings), we could push on the the aspect of interpretability of results.
 
+### Modifications to SWEAT
+* `enrich` and `lexicon_refinement` inside `utils.py` need to be updated to be used in more than 2 models.
+* Also, we must try to relax some of the constraints in the `lexicon refinement` function. For example, we might set a lower value of `zipf_cutoff`. Another option is to set `topn = n` inside the building of the comparative framework, thus maintaining the n nearest across the various representations, instead of just one.
+
 ## Note
 \* We are aware of the fact that there is no such thing as a *neutral way* of reporting news, and that every journal and journalist tend to have its own views. Our research, in fact, focuses on the use of language only.
+
