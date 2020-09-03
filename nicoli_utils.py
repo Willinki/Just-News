@@ -5,6 +5,7 @@ import pandas as pd
 import itertools
 from collections import Counter
 import codecs
+import tqdm
 
 
 def zipf(word,wordcounts,d1=None,d2=None):
