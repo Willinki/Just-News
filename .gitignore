@@ -133,3 +133,4 @@ dmypy.json
 *.json
 *.txt
 .DS_Store
+*.model
