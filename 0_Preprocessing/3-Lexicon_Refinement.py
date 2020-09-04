@@ -46,7 +46,6 @@ def main():
                                                       models = models_test, 
                                                       corpora = corpora_test, 
                                                       zipf_cutoff=5)
-    lexicon_refined[lexicon_refined == 0] = -1
 
     #enriching lexicon
     print("[INFO] Applying lexicon augmentation")
