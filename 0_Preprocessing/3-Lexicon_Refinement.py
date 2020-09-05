@@ -49,11 +49,11 @@ def main():
 
     #enriching lexicon
     print("[INFO] Applying lexicon augmentation")
-    vectorized_lexicon, lexicon_labels = nicoli_utils.enrich(lex = lexicon_refined, 
-                                                             models = models_test, 
-                                                             n_target = 500, 
-                                                             msteps = 200, 
-                                                             return_words = False)
+    vectorized_lexicon, lexicon_labels, words = nicoli_utils.enrich(lex = lexicon_refined, 
+                                                                    models = models_test, 
+                                                                    n_target = 500, 
+                                                                    msteps = 200, 
+                                                                    return_words = True)
     
     #saving the enriched lexicon
     print("[INFO] Saving the enriched lexicon at Just-News/lexicons/enriched_lexicon.csv")
@@ -61,7 +61,8 @@ def main():
     with open("./lexicon/enriched_lexicon.csv", 'w') as file:
         pd.DataFrame({
                       "Vectorized_words": vectorized_lexicon.tolist(), 
-                      "Labels": lexicon_labels
+                      "Labels": lexicon_labels,
+                      "Words" : words
                      }).to_csv(file)
 
 if __name__ == "__main__":
