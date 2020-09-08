@@ -202,7 +202,7 @@ def enrich(lex, models, n_target=None, verbose=True, return_words=False, msteps=
     word_neg = [k for k in lex.keys() if lex[k] < 0 ]
     word_full = word_pos + word_neg
 
-    vect_original = [np.mean( [models[0].wv[w], models[1].wv[w] ] , axis=0 ) for w in word_full ]
+    vect_original = [np.mean( [model.wv[w] for model in models] , axis=0 ) for w in word_full ]
     vect_pos = vect_original[:len(word_pos)]
     vect_neg = vect_original[len(word_pos):]
 

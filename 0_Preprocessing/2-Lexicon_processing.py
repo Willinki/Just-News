@@ -40,10 +40,10 @@ def main():
     lexicon.columns = ["Word", "Subj_score"]
     #cleaning format
     lexicon["Word"] = lexicon["Word"].apply(lambda x: x.replace("word1=", ""))
-    lexicon["Subj_score"] = lexicon["Subj_score"].apply(lambda x: 
+    lexicon["Subj_score"] = lexicon["Subj_score"].apply(lambda x:
                                                         x.replace("type=", ""))
     lexicon["Subj_score"] = lexicon["Subj_score"].apply(encode_subj)
-    
+
     #saving to /Just-News/lexicon/clean_lexicon.csv
     print("[INFO] Saving to /Just-News/lexicon/clean_lexicon.csv")
     with open("./lexicon/clean_lexicon.csv", 'w') as file:
