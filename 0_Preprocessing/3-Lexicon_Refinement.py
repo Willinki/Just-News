@@ -17,53 +17,49 @@ import os
 import glob
 import numpy as np
 import string
-from jupyterthemes import jtplot
 # currently installed theme will be used to
-import nicoli_utils 
-# set plot style if no arguments provided
-jtplot.style()
+from utils import *
 
 def main():
-    # loading clean_lexicon
-    print("[INFO] Loading Just-News/lexicon/clean_lexicon.csv")
+        # Caricamento del lexicon
+    print("[INFO] Loading cleaned lexicon")
     with open("./lexicon/clean_lexicon.csv", 'r') as file:
         lexicon = pd.read_csv(file, index_col=1)
-    lexicon = lexicon.drop("Unnamed: 0", axis=1)
-    lexicon = lexicon.to_dict()["Subj_score"]
 
-    # loading models
-    print("[INFO] Loading Just-News/lexicon/clean_lexicon.csv")
-    slices = {filename.split('/')[-1].replace(".model", ""): 
+    print("[INFO] Loading trained embeddings")
+    # Caricamento dei modelli già addestrati
+    slices = {filename.split('/')[-1].replace(".model", ""):
               Word2Vec.load(filename)
               for filename in glob.glob('./models/*.model')}
-    print("[WARNING] remember to set up models and corpora correctly")
-    models_test = [slices["New York Times"], slices["Breitbart"]]
-    corpora_test = ["./corporas/text_New York Times.txt", "./corporas/text_Breitbart.txt"]
-    
-    #refining lexicon
-    print("[INFO] Applying lexicon refinement")
-    lexicon_refined = nicoli_utils.lexicon_refinement(lex = lexicon, 
-                                                      models = models_test, 
-                                                      corpora = corpora_test, 
-                                                      zipf_cutoff=5)
 
-    #enriching lexicon
-    print("[INFO] Applying lexicon augmentation")
-    vectorized_lexicon, lexicon_labels, words = nicoli_utils.enrich(lex = lexicon_refined, 
-                                                                    models = models_test, 
-                                                                    n_target = 500, 
-                                                                    msteps = 200, 
-                                                                    return_words = True)
-    
-    #saving the enriched lexicon
-    print("[INFO] Saving the enriched lexicon at Just-News/lexicons/enriched_lexicon.csv")
-    print("\t Column names: Vectorized_words, Labels")
+    lexicon = lexicon.drop("Unnamed: 0", axis=1).to_dict()["Subj_score"]
+
+    # Lessico che si ottiene raffinando su tutti
+    # gli embedding generati
+    print("[INFO] Lexicon refinement")
+    lexicon_refined = lexicon_refinement(lex = lexicon,
+                                        models = [slices[sli]
+                                                 for sli in slices],
+                                        corpora = ["./corpora/text_"+str(sli)+".txt"
+                                                    for sli in slices],
+                                        zipf_cutoff=5)
+
+    print("[INFO] Saving lexicon refined to Just-News/lexicon/lexicon_refined.csv")
+    with open("./lexicon/lexicon_refined.csv", 'w') as file:
+        pd.DataFrame(lexicon_refined).to_csv(file)
+
+    print("[INFO] Data augmentation on lexicon")
+    vectorized_lexicon, lexicon_labels, words = enrich(lex = lexicon_refined,
+                                                       models = [slices[sli]
+                                                                for sli in slices],
+                                                       n_target = 300,
+                                                       msteps = 200,
+                                                       return_words = True)
+
+    print("[INFO] Saving augmented data to Just-News/lexicon/enriched_lexicon.csv")
     with open("./lexicon/enriched_lexicon.csv", 'w') as file:
-        pd.DataFrame({
-                      "Vectorized_words": vectorized_lexicon.tolist(), 
-                      "Labels": lexicon_labels,
-                      "Words" : words
-                     }).to_csv(file)
+        pd.DataFrame({"Vectorized_words": vectorized_lexicon.tolist(),
+                  "Labels": lexicon_labels, "Words": words}).to_csv(file)
 
 if __name__ == "__main__":
     main()

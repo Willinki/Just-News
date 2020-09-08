@@ -7,7 +7,7 @@
 #################################################
 #################################################
 #       WHAT IS PRODUCED:                       #
-#       Just-News/data_final.csv                #
+#       Just-News/data_safe.csv                #
 #       a dataframe containing all the          #
 #       articles and information                #
 #################################################
@@ -17,10 +17,6 @@ import os
 import json
 import numpy as np
 import string
-from jupyterthemes import jtplot
-# currently installed theme will be used to
-# set plot style if no arguments provided
-jtplot.style()
 
 #function to extract newspaper from link
 def create_newssite(link = None):
@@ -51,20 +47,20 @@ def main():
     for filename in glob.glob('./data_final/*.json'):
         with open(filename, 'r') as f:
             json_load = json.loads(f.read())
-            df_list = df_list.append(pd.DataFrame.from_records(json_load, index="_id"), 
+            df_list = df_list.append(pd.DataFrame.from_records(json_load, index="_id"),
                                      ignore_index = True)
-    
+
     #we remove unnecessary columns
     print("[INFO] manipulating dataFrame")
-    df_list = df_list[['Title', 
-                       "Date", 
-                       "Link", 
-                       "Paragraphs", 
+    df_list = df_list[['Title',
+                       "Date",
+                       "Link",
+                       "Paragraphs",
                        "Authors"]]
-    
+
     #we apply the 'create_newssite' function and add a column
     df_list["Newssite"] = df_list["Link"].apply(create_newssite)
-    
+
     #we save the dataFrame in "../data_safe.csv"
     print("[INFO] Saving in ---> Just-News/data_safe.csv")
     with open("./data_safe.csv", 'w') as file:
@@ -72,5 +68,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    
