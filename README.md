@@ -6,6 +6,9 @@ Our research focuses on the use of *subjective language*, opposed to a more *neu
 
 In other words, we are trying to determine which newspapers tend to rely on emotions and morals, rather than merely reporting facts.
 
+
+#### Results presented in *data_semantics.pdf*
+
 ## Data
 We conduct our research on the following newspapers:
 * New York Times
